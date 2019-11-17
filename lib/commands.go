@@ -4,19 +4,19 @@ import (
 	"github.com/urfave/cli"
 )
 
-var commands = []cli.Command{
+var commands = []*cli.Command{
 	Method,
 }
 
-var Method = cli.Command{
-	Name:      "method",
-	ShortName: "m",
-	Usage:     "Command to enable/disable method.",
-	Subcommands: cli.Commands{
-		cli.Command{
-			Name:      "list",
-			ShortName: "l",
-			Usage:     "Display disabled methods.",
+var Method = &cli.Command{
+	Name:    "method",
+	Aliases: []string{"m"},
+	Usage:   "Command to enable/disable method.",
+	Subcommands: []*cli.Command{
+		{
+			Name:    "list",
+			Aliases: []string{"l"},
+			Usage:   "Display disabled methods.",
 			Flags: []cli.Flag{
 				URL,
 				UserName,
@@ -24,14 +24,15 @@ var Method = cli.Command{
 				Insecure,
 				VM,
 			},
-			Action: func(c *cli.Context) {
+			Action: func(c *cli.Context) error {
 				get_disable_methods(c)
+				return nil
 			},
 		},
-		cli.Command{
-			Name:      "enable",
-			ShortName: "e",
-			Usage:     "Enable methods.",
+		{
+			Name:    "enable",
+			Aliases: []string{"e"},
+			Usage:   "Enable methods.",
 			Flags: []cli.Flag{
 				URL,
 				UserName,
@@ -40,14 +41,15 @@ var Method = cli.Command{
 				VM,
 				List,
 			},
-			Action: func(c *cli.Context) {
+			Action: func(c *cli.Context) error {
 				enable_methods(c)
+				return nil
 			},
 		},
-		cli.Command{
-			Name:      "disable",
-			ShortName: "d",
-			Usage:     "Disable methods.",
+		{
+			Name:    "disable",
+			Aliases: []string{"d"},
+			Usage:   "Disable methods.",
 			Flags: []cli.Flag{
 				URL,
 				UserName,
@@ -56,8 +58,9 @@ var Method = cli.Command{
 				VM,
 				List,
 			},
-			Action: func(c *cli.Context) {
+			Action: func(c *cli.Context) error {
 				disable_methods(c)
+				return nil
 			},
 		},
 	},
